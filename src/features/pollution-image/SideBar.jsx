@@ -1,9 +1,18 @@
 import React from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
-import { useAction } from "../../hooks/useAction";
-import { toggleSidebarAction } from "./redux";
-import { Button } from "antd";
+import { useAction } from "hooks/useAction";
+import {
+  toggleSidebarAction,
+  itemChangeAction,
+  itemRemoveAction,
+  itemAddAction
+} from "./redux";
+import { Button, Divider, DatePicker, Select, Typography } from "antd";
+import ptt from "assets/pttlogo.png";
+
+const { Text } = Typography;
+const { Option } = Select;
 
 const Container = styled.div`
   position: fixed;
@@ -15,6 +24,7 @@ const Container = styled.div`
   background-color: white;
   transition: all 0.4s ease-in-out;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+  overflow-y: auto;
   @media (max-width: 800px) {
     transform: translate3d(${props => (props.open ? 0 : -400)}px, 0, 0);
   }
@@ -31,8 +41,10 @@ const Inner = styled.div`
 
 const Spacer = styled.div`
   width: 300px;
+  flex-shrink: 0;
+  height: 100vh;
   @media (max-width: 800px) {
-    width: ${props => (props.open ? 300 : 0)}px;
+    width: 0px;
   }
 `;
 
@@ -44,6 +56,78 @@ const CloseButtonContainer = styled.div`
     display: none;
   }
 `;
+
+const LogoContainer = styled.div`
+  width: 60%;
+  padding: 0 16px;
+`;
+const LogoImage = styled.img`
+  width: 100%;
+  height: auto;
+`;
+const ActionContainer = styled.div`
+  display: flex;
+  flex-flow: column nowrap;
+  width: 100%;
+  padding: 0 16px;
+`;
+const ControllerContainer = styled.div`
+  position: relative;
+  display: flex;
+  flex-flow: column nowrap;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid #eee;
+  margin-bottom: 16px;
+  .remove-button {
+    opacity: 0;
+    transition: 0.1s;
+    transition-delay: 0.2s;
+  }
+  &:hover {
+    .remove-button {
+      opacity: 1;
+
+      transition: 0s;
+      transition-delay: 0s;
+    }
+  }
+`;
+const RemoveButtonContainer = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate3d(50%, -50%, 0);
+`;
+
+const DatePickerContainer = styled.div`
+  margin-bottom: 8px;
+  width: 100%;
+  .ant-calendar-picker {
+    width: 100%;
+  }
+`;
+const RemoveButton = props => {
+  return (
+    <RemoveButtonContainer>
+      <Button
+        type="danger"
+        shape="circle"
+        icon="close"
+        size="small"
+        {...props}
+      />
+    </RemoveButtonContainer>
+  );
+};
+
+const Logo = () => {
+  return (
+    <LogoContainer>
+      <LogoImage src={ptt} />
+    </LogoContainer>
+  );
+};
 
 const CloseButton = () => {
   const toggleSidebar = useAction(toggleSidebarAction);
@@ -60,14 +144,76 @@ const CloseButton = () => {
   );
 };
 
+const levels = new Array(40).fill(0).map((_, index) => (
+  <Option key={index} value={(index + 1) * 10}>
+    {(index + 1) * 10} m
+  </Option>
+));
+
+const Controller = ({ item, index }) => {
+  const onChange = useAction(itemChangeAction);
+  const onRemove = useAction(itemRemoveAction);
+  const onDatePickerChange = date => {
+    onChange({ ...item, date }, index);
+  };
+  const onRemoveButtonClick = () => {
+    onRemove(item, index);
+  };
+  const onLevelsChange = levels => {
+    onChange({ ...item, levels }, index);
+  };
+  return (
+    <ControllerContainer>
+      <RemoveButton className="remove-button" onClick={onRemoveButtonClick} />
+      <DatePickerContainer>
+        <Text strong>Select Date</Text>
+        <DatePicker onChange={onDatePickerChange} value={item.date} format="DD MMMM YYYY" />
+      </DatePickerContainer>
+      <Text strong>Select Height</Text>
+      <Select
+        mode="multiple"
+        style={{ width: "100%" }}
+        placeholder="Height"
+        value={item.levels}
+        onChange={onLevelsChange}
+      >
+        {levels}
+      </Select>
+    </ControllerContainer>
+  );
+};
+
+const AddItem = () => {
+  const onClick = useAction(itemAddAction);
+  return (
+    <Button type="primary" shape="round" icon="plus" onClick={onClick}>
+      Add
+    </Button>
+  );
+};
+
+const Action = () => {
+  const items = useSelector(state => state.pollution.items);
+  return (
+    <ActionContainer>
+      {items.map((item, index) => (
+        <Controller item={item} index={index} key={index} />
+      ))}
+      <AddItem />
+    </ActionContainer>
+  );
+};
+
 export const SideBar = () => {
   const sidebar = useSelector(state => state.pollution.sidebar);
   return (
-    <Spacer open={sidebar}>
+    <Spacer>
       <Container open={sidebar}>
         <Inner>
           <CloseButton />
-          Sidebar
+          <Logo />
+          <Divider />
+          <Action />
         </Inner>
       </Container>
     </Spacer>

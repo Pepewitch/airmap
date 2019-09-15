@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Button } from "antd";
-import { useAction } from "../../hooks/useAction";
+import { useAction } from "hooks/useAction";
 import { toggleSidebarAction } from "./redux";
 
 const Container = styled.div`
@@ -20,6 +20,9 @@ const Container = styled.div`
 const Spacer = styled.div`
   width: 100%;
   height: 56px;
+  @media (min-width: 801px) {
+    display: none;
+  }
 `;
 
 export const NavBar = () => {
