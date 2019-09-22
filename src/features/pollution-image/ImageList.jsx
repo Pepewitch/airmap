@@ -91,7 +91,7 @@ const Images = ({ images, width }) => {
   const scale = useSelector(state => state.pollution.cropScale);
   const onPositionChange = useAction(cropPositionChangeAction);
   return (
-    <StyledCarousel effect="fade" ref={carouselRef}>
+    <StyledCarousel effect="fade" swipe={false} ref={carouselRef}>
       {images.map(image => (
         <ImageContainer key={image}>
           <AvatarEditor
