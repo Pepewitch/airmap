@@ -6,9 +6,10 @@ import {
   toggleSidebarAction,
   itemChangeAction,
   itemRemoveAction,
-  itemAddAction
+  itemAddAction,
+  cropScaleChangeAction
 } from "./redux";
-import { Button, Divider, DatePicker, Select, Typography } from "antd";
+import { Button, Divider, DatePicker, Select, Typography, Slider } from "antd";
 import ptt from "assets/pttlogo.png";
 
 const { Text } = Typography;
@@ -107,6 +108,12 @@ const DatePickerContainer = styled.div`
     width: 100%;
   }
 `;
+
+const ZoomActionContainer = styled.div`
+  width: 100%;
+  padding: 0 16px;
+`;
+
 const RemoveButton = props => {
   return (
     <RemoveButtonContainer>
@@ -167,7 +174,11 @@ const Controller = ({ item, index }) => {
       <RemoveButton className="remove-button" onClick={onRemoveButtonClick} />
       <DatePickerContainer>
         <Text strong>Select Date</Text>
-        <DatePicker onChange={onDatePickerChange} value={item.date} format="DD MMMM YYYY" />
+        <DatePicker
+          onChange={onDatePickerChange}
+          value={item.date}
+          format="DD MMMM YYYY"
+        />
       </DatePickerContainer>
       <Text strong>Select Height</Text>
       <Select
@@ -204,6 +215,22 @@ const Action = () => {
   );
 };
 
+const ZoomAction = () => {
+  const scale = useSelector(state => state.pollution.cropScale);
+  const onScaleChange = useAction(cropScaleChangeAction);
+  return (
+    <ZoomActionContainer>
+      <Text strong>Zoom</Text>
+      <Slider
+        value={scale * 100}
+        min={100}
+        max={500}
+        onChange={nextScale => onScaleChange(nextScale / 100)}
+      />
+    </ZoomActionContainer>
+  );
+};
+
 export const SideBar = () => {
   const sidebar = useSelector(state => state.pollution.sidebar);
   return (
@@ -212,6 +239,8 @@ export const SideBar = () => {
         <Inner>
           <CloseButton />
           <Logo />
+          <Divider />
+          <ZoomAction />
           <Divider />
           <Action />
         </Inner>

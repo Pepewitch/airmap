@@ -2,6 +2,9 @@ import React, { useRef, useState, useEffect, useCallback } from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { Typography, Carousel, Button, Switch } from "antd";
+import AvatarEditor from "react-avatar-editor";
+import { cropPositionChangeAction } from "./redux";
+import { useAction } from "hooks/useAction";
 
 const { Title } = Typography;
 
@@ -62,7 +65,7 @@ const AutoplaySwitch = props => {
   );
 };
 
-const Images = ({ images }) => {
+const Images = ({ images, width }) => {
   const carouselRef = useRef(null);
   const onLeftClick = () => carouselRef.current && carouselRef.current.prev();
   const onRightClick = useCallback(
@@ -84,11 +87,22 @@ const Images = ({ images }) => {
       if (intervalRef.current) window.clearInterval(intervalRef.current);
     };
   }, [autoplay, onRightClick]);
+  const position = useSelector(state => state.pollution.cropPosition);
+  const scale = useSelector(state => state.pollution.cropScale);
+  const onPositionChange = useAction(cropPositionChangeAction);
   return (
     <StyledCarousel effect="fade" ref={carouselRef}>
       {images.map(image => (
         <ImageContainer key={image}>
-          <Image src={image} alt="air_image" />
+          <AvatarEditor
+            image={image}
+            width={(width > 600 ? 600 : width) - 32}
+            height={(width > 600 ? 600 : width) - 32}
+            border={0}
+            scale={scale}
+            position={position}
+            onPositionChange={onPositionChange}
+          />
           <AutoplaySwitch checked={autoplay} onChange={e => setAutoPlay(e)} />
           <Direction direction="left" onClick={onLeftClick} />
           <Direction direction="right" onClick={onRightClick} />
@@ -98,7 +112,7 @@ const Images = ({ images }) => {
   );
 };
 
-const Item = ({ item }) => {
+const Item = ({ item, width }) => {
   if (!item.date || !item.levels.length > 0) return null;
   return (
     <ItemContainer>
@@ -120,17 +134,30 @@ const Item = ({ item }) => {
                 : Math.floor(level / 10)
             }_01H1GALL.png`
         )}
+        width={width}
       />
     </ItemContainer>
   );
 };
 
+const useWindowWidth = () => {
+  const [width, setWidth] = useState(window.innerWidth);
+  useEffect(() => {
+    const event = window.addEventListener("resize", () => {
+      setWidth(window.innerWidth);
+    });
+    return () => window.removeEventListener(event);
+  }, []);
+  return width;
+};
+
 export const ImageList = () => {
   const items = useSelector(state => state.pollution.items);
+  const width = useWindowWidth();
   return (
     <Container>
       {items.map((item, index) => (
-        <Item item={item} key={index} />
+        <Item item={item} key={index} width={width} />
       ))}
     </Container>
   );

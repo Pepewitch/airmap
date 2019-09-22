@@ -2,10 +2,15 @@ import moment from "moment";
 
 const initialState = {
   sidebar: false,
+  cropPosition: {
+    x: 0.5,
+    y: 0.5
+  },
+  cropScale: 1,
   items: [
     {
       date: moment(),
-      levels: [10,20,30,40]
+      levels: [10, 20, 30, 40]
     }
   ]
 };
@@ -14,7 +19,9 @@ const ACTION = {
   POLLUTION_IMAGE_TOGGLE_SIDEBAR: "POLLUTION_IMAGE_TOGGLE_SIDEBAR",
   POLLUTION_IMAGE_ITEM_CHANGE: "POLLUTION_IMAGE_ITEM_CHANGE",
   POLLUTION_IMAGE_ITEM_REMOVE: "POLLUTION_IMAGE_ITEM_REMOVE",
-  POLLUTION_IMAGE_ITEM_ADD: "POLLUTION_IMAGE_ITEM_ADD"
+  POLLUTION_IMAGE_ITEM_ADD: "POLLUTION_IMAGE_ITEM_ADD",
+  POLLUTION_IMAGE_CROP_POSITION_CHANGE: "POLLUTION_IMAGE_CROP_POSITION_CHANGE",
+  POLLUTION_IMAGE_CROP_SCALE_CHANGE: "POLLUTION_IMAGE_CROP_SCALE_CHANGE"
 };
 
 export const toggleSidebarAction = () => {
@@ -53,6 +60,24 @@ export const itemAddAction = () => {
   };
 };
 
+export const cropPositionChangeAction = cropPosition => {
+  return {
+    type: ACTION.POLLUTION_IMAGE_CROP_POSITION_CHANGE,
+    payload: {
+      cropPosition
+    }
+  };
+};
+
+export const cropScaleChangeAction = cropScale => {
+  return {
+    type: ACTION.POLLUTION_IMAGE_CROP_SCALE_CHANGE,
+    payload: {
+      cropScale
+    }
+  };
+};
+
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
     case ACTION.POLLUTION_IMAGE_TOGGLE_SIDEBAR:
@@ -67,6 +92,10 @@ export const reducer = (state = initialState, action) => {
     }
     case ACTION.POLLUTION_IMAGE_ITEM_ADD:
       return { ...state, items: [...state.items, action.payload] };
+    case ACTION.POLLUTION_IMAGE_CROP_POSITION_CHANGE:
+      return { ...state, cropPosition: action.payload.cropPosition };
+    case ACTION.POLLUTION_IMAGE_CROP_SCALE_CHANGE:
+      return { ...state, cropScale: action.payload.cropScale };
     default:
       return state;
   }
