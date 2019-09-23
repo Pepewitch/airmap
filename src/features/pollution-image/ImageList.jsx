@@ -112,6 +112,51 @@ const Images = ({ images, width }) => {
   );
 };
 
+const imageMapper = {
+  10: 0,
+  20: 1,
+  25: 2,
+  30: 3,
+  35: 4,
+  40: 5,
+  45: 6,
+  50: 7,
+  60: 8,
+  70: 9,
+  80: 10,
+  90: 11,
+  100: 12,
+  110: 13,
+  120: 14,
+  130: 15,
+  140: 16,
+  150: 17,
+  160: 18,
+  170: 19,
+  180: 20,
+  190: 21,
+  200: 22,
+  210: 23,
+  220: 24,
+  230: 25,
+  240: 26,
+  250: 27,
+  260: 28,
+  270: 29,
+  280: 30,
+  300: 31,
+  310: 32,
+  320: 33,
+  330: 34,
+  340: 35,
+  350: 36,
+  360: 37,
+  370: 38,
+  380: 39,
+  390: 40,
+  400: 41
+};
+
 const Item = ({ item, width }) => {
   if (!item.date || !item.levels.length > 0) return null;
   return (
@@ -126,13 +171,16 @@ const Item = ({ item, width }) => {
         </Button>
       </div>
       <Images
+        // images={item.levels.map(
+        //   level =>
+        //     `/airdata/${
+        //       level < 100
+        //         ? `0${Math.floor(level / 10)}`
+        //         : Math.floor(level / 10)
+        //     }_01H1GALL.png`
+        // )}
         images={item.levels.map(
-          level =>
-            `/airdata/${
-              level < 100
-                ? `0${Math.floor(level / 10)}`
-                : Math.floor(level / 10)
-            }_01H1GALL.png`
+          level => `/airdata/23/0${imageMapper[level]}.jpg`
         )}
         width={width}
       />

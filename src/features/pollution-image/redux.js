@@ -9,8 +9,8 @@ const initialState = {
   cropScale: 1,
   items: [
     {
-      date: moment(),
-      levels: [10, 20, 30, 40]
+      date: moment('09-23-2019'),
+      levels: [10]
     }
   ]
 };

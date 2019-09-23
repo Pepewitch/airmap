@@ -151,9 +151,54 @@ const CloseButton = () => {
   );
 };
 
-const levels = new Array(40).fill(0).map((_, index) => (
-  <Option key={index} value={(index + 1) * 10}>
-    {(index + 1) * 10} m
+const levelsMapper = {
+  0: 10,
+  1: 20,
+  2: 25,
+  3: 30,
+  4: 35,
+  5: 40,
+  6: 45,
+  7: 50,
+  8: 60,
+  9: 70,
+  10: 80,
+  11: 90,
+  12: 100,
+  13: 110,
+  14: 120,
+  15: 130,
+  16: 140,
+  17: 150,
+  18: 160,
+  19: 170,
+  20: 180,
+  21: 190,
+  22: 200,
+  23: 210,
+  24: 220,
+  25: 230,
+  26: 240,
+  27: 250,
+  28: 260,
+  29: 270,
+  30: 280,
+  31: 300,
+  32: 310,
+  33: 320,
+  34: 330,
+  35: 340,
+  36: 350,
+  37: 360,
+  38: 370,
+  39: 380,
+  40: 390,
+  41: 400
+};
+
+const levels = new Array(42).fill(0).map((_, index) => (
+  <Option key={index} value={levelsMapper[index]}>
+    {levelsMapper[index]} m
   </Option>
 ));
 
@@ -177,6 +222,9 @@ const Controller = ({ item, index }) => {
         <DatePicker
           onChange={onDatePickerChange}
           value={item.date}
+          disabledDate={date =>
+            date.date() !== 23 || date.month() !== 8 || date.year() !== 2019
+          }
           format="DD MMMM YYYY"
         />
       </DatePickerContainer>
