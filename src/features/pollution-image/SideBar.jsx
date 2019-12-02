@@ -114,6 +114,11 @@ const ZoomActionContainer = styled.div`
   padding: 0 16px;
 `;
 
+const OptionalText = styled(Text)`
+  color: #888 !important;
+  font-size: 0.6em;
+`;
+
 const RemoveButton = props => {
   return (
     <RemoveButtonContainer>
@@ -151,9 +156,9 @@ const CloseButton = () => {
   );
 };
 
-const levels = new Array(40).fill(0).map((_, index) => (
-  <Option key={index} value={(index + 1) * 10}>
-    {(index + 1) * 10} m
+const levels = new Array(41).fill(0).map((_, index) => (
+  <Option key={index} value={index}>
+    {index}
   </Option>
 ));
 
@@ -166,27 +171,38 @@ const Controller = ({ item, index }) => {
   const onRemoveButtonClick = () => {
     onRemove(item, index);
   };
-  const onLevelsChange = levels => {
-    onChange({ ...item, levels }, index);
+  const onLevelChange = level => {
+    onChange({ ...item, level }, index);
   };
   return (
     <ControllerContainer>
       <RemoveButton className="remove-button" onClick={onRemoveButtonClick} />
       <DatePickerContainer>
-        <Text strong>Select Date</Text>
+        <Text strong>
+          Select Start Date <OptionalText>(Optional)</OptionalText>
+        </Text>
         <DatePicker
           onChange={onDatePickerChange}
           value={item.date}
           format="DD MMMM YYYY"
         />
       </DatePickerContainer>
-      <Text strong>Select Height</Text>
+      <DatePickerContainer>
+        <Text strong>
+          Select End Date <OptionalText>(Optional)</OptionalText>
+        </Text>
+        <DatePicker
+          onChange={onDatePickerChange}
+          value={item.date}
+          format="DD MMMM YYYY"
+        />
+      </DatePickerContainer>
+      <Text strong>Select Level</Text>
       <Select
-        mode="multiple"
         style={{ width: "100%" }}
-        placeholder="Height"
-        value={item.levels}
-        onChange={onLevelsChange}
+        placeholder="Level"
+        value={item.level}
+        onChange={onLevelChange}
       >
         {levels}
       </Select>

@@ -9,8 +9,9 @@ const initialState = {
   cropScale: 1,
   items: [
     {
-      date: moment(),
-      levels: [10, 20, 30, 40]
+      startDate: moment(),
+      endDate: null,
+      level: 0
     }
   ]
 };
@@ -55,7 +56,7 @@ export const itemAddAction = () => {
     type: ACTION.POLLUTION_IMAGE_ITEM_ADD,
     payload: {
       date: null,
-      levels: []
+      level: 0
     }
   };
 };

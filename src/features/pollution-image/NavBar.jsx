@@ -20,6 +20,7 @@ const Container = styled.div`
 const Spacer = styled.div`
   width: 100%;
   height: 56px;
+  background-color: white;
   @media (min-width: 801px) {
     display: none;
   }
