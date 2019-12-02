@@ -10,18 +10,13 @@ const ItemContainer = styled.div`
 `;
 
 export const ImageItem = ({ item, width }) => {
-  if (!item.date || (!item.level && typeof item.level !== "number"))
-    return null;
+  if (!item.startDate || (!item.level && typeof item.level !== "number")) {
+    return <span>Configuration is invalid.</span>;
+  }
   return (
     <ItemContainer>
       <div style={{ display: "flex" }}>
-        <Title level={3}>{item.date.format("dddd, Do MMMM YYYY")}</Title>
-        <Button
-          style={{ marginLeft: 8 }}
-          onClick={() => window.open("/neoTEST/myAirPoint123.html", "_blank")}
-        >
-          View 3D
-        </Button>
+        <Title level={3}>{item.startDate.format("dddd, Do MMMM YYYY")}</Title>
       </div>
       <ImagesCarousel
         images={[

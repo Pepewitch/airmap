@@ -165,8 +165,11 @@ const levels = new Array(41).fill(0).map((_, index) => (
 const Controller = ({ item, index }) => {
   const onChange = useAction(itemChangeAction);
   const onRemove = useAction(itemRemoveAction);
-  const onDatePickerChange = date => {
-    onChange({ ...item, date }, index);
+  const onStartDatePickerChange = startDate => {
+    onChange({ ...item, startDate }, index);
+  };
+  const onEndDatePickerChange = endDate => {
+    onChange({ ...item, endDate }, index);
   };
   const onRemoveButtonClick = () => {
     onRemove(item, index);
@@ -182,8 +185,8 @@ const Controller = ({ item, index }) => {
           Select Start Date <OptionalText>(Optional)</OptionalText>
         </Text>
         <DatePicker
-          onChange={onDatePickerChange}
-          value={item.date}
+          onChange={onStartDatePickerChange}
+          value={item.startDate}
           format="DD MMMM YYYY"
         />
       </DatePickerContainer>
@@ -192,8 +195,8 @@ const Controller = ({ item, index }) => {
           Select End Date <OptionalText>(Optional)</OptionalText>
         </Text>
         <DatePicker
-          onChange={onDatePickerChange}
-          value={item.date}
+          onChange={onEndDatePickerChange}
+          value={item.endDate}
           format="DD MMMM YYYY"
         />
       </DatePickerContainer>

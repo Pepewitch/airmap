@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { useScreenSize } from "features/screen-size/useScreenSize";
 import { ImageItem } from "./ImageItem";
+import { Divider } from "antd";
 
 const Container = styled.div`
   width: 100%;
@@ -17,7 +18,10 @@ export const ImageList = () => {
   return (
     <Container>
       {items.map((item, index) => (
-        <ImageItem item={item} key={index} width={width} />
+        <div key={index}>
+          <ImageItem item={item} width={width} />
+          <Divider />
+        </div>
       ))}
     </Container>
   );

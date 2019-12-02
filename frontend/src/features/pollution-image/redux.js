@@ -2,6 +2,7 @@ import moment from "moment";
 
 const initialState = {
   sidebar: false,
+  dimension: "2D",
   cropPosition: {
     x: 0.5,
     y: 0.5
@@ -22,7 +23,8 @@ const ACTION = {
   POLLUTION_IMAGE_ITEM_REMOVE: "POLLUTION_IMAGE_ITEM_REMOVE",
   POLLUTION_IMAGE_ITEM_ADD: "POLLUTION_IMAGE_ITEM_ADD",
   POLLUTION_IMAGE_CROP_POSITION_CHANGE: "POLLUTION_IMAGE_CROP_POSITION_CHANGE",
-  POLLUTION_IMAGE_CROP_SCALE_CHANGE: "POLLUTION_IMAGE_CROP_SCALE_CHANGE"
+  POLLUTION_IMAGE_CROP_SCALE_CHANGE: "POLLUTION_IMAGE_CROP_SCALE_CHANGE",
+  POLLUTION_IMAGE_DIMENSION_CHANGE: "POLLUTION_IMAGE_DIMENSION_CHANGE"
 };
 
 export const toggleSidebarAction = () => {
@@ -79,6 +81,13 @@ export const cropScaleChangeAction = cropScale => {
   };
 };
 
+export const dimensionChangeAction = dimension => {
+  return {
+    type: ACTION.POLLUTION_IMAGE_DIMENSION_CHANGE,
+    payload: { dimension }
+  };
+};
+
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
     case ACTION.POLLUTION_IMAGE_TOGGLE_SIDEBAR:
@@ -97,6 +106,8 @@ export const reducer = (state = initialState, action) => {
       return { ...state, cropPosition: action.payload.cropPosition };
     case ACTION.POLLUTION_IMAGE_CROP_SCALE_CHANGE:
       return { ...state, cropScale: action.payload.cropScale };
+    case ACTION.POLLUTION_IMAGE_DIMENSION_CHANGE:
+      return { ...state, dimension: action.payload.dimension };
     default:
       return state;
   }
