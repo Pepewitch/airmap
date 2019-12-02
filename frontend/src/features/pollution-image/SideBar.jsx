@@ -179,7 +179,7 @@ const Controller = ({ item, index }) => {
   };
   return (
     <ControllerContainer>
-      <RemoveButton className="remove-button" onClick={onRemoveButtonClick} />
+      {/* <RemoveButton className="remove-button" onClick={onRemoveButtonClick} /> */}
       <DatePickerContainer>
         <Text strong>
           Select Start Date <OptionalText>(Optional)</OptionalText>
@@ -229,7 +229,7 @@ const Action = () => {
       {items.map((item, index) => (
         <Controller item={item} index={index} key={index} />
       ))}
-      <AddItem />
+      {/* <AddItem /> */}
     </ActionContainer>
   );
 };
