@@ -6,12 +6,12 @@ import { ImageItem } from "./ImageItem";
 import { Divider } from "antd";
 
 const Container = styled.div`
-  width: 900px;
+  width: 1000px;
   margin: 0 auto;
-  max-width: 100vw;
   padding: 16px;
-  @media screen and (min-width: 900px) {
-    max-width: 100%;
+  max-width: 100vw;
+  @media screen and (min-width: 801px) {
+    max-width: calc(100vw - 300px);
   }
 `;
 
