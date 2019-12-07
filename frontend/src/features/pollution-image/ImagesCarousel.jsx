@@ -72,7 +72,7 @@ export const ImagesCarousel = ({ images, width }) => {
   const position = useSelector(state => state.pollution.cropPosition);
   const scale = useSelector(state => state.pollution.cropScale);
   const onPositionChange = useAction(cropPositionChangeAction);
-  const responsiveWidth = (width > 800 ? 800 : width) - 32;
+  const responsiveWidth = (width > 900 ? 900 : width) - 32;
   return (
     <StyledCarousel
       effect="fade"
