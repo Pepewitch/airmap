@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { ImagesCarousel } from "./ImagesCarousel";
 import moment from "moment";
 import axios from "axios";
+import { API_ENDPOINT, IMAGE_ENDPOINT } from "./const";
 
 const { Title } = Typography;
 
@@ -18,11 +19,19 @@ const useImages = item => {
     setLoading(true);
     setData([]);
 
+    const { startDate, endDate, type, level } = item;
+    const query = (
+      (startDate ? `startDate=${startDate.toISOString()}&` : "") +
+      (endDate ? `endDate=${endDate.toISOString()}&` : "") +
+      (type ? `type=${type}&` : "") +
+      (level ? `level=${level}&` : "")
+    ).slice(0, -1);
+
     axios
-      .get("/")
+      .get(`${API_ENDPOINT}/image2d?${query}`)
       .then(res => res.data)
       .then(data => {
-        setData(["/airdata/00_01H1GALL.png", "/airdata/01_01H1GALL.png"]);
+        setData(data.images.map(image => `${IMAGE_ENDPOINT}/${image}`));
         setLoading(false);
       });
   }, [item]);
@@ -36,7 +45,13 @@ export const ImageItem = ({ item, width }) => {
       {/* <div style={{ display: "flex" }}>
         <Title level={3}>{item.startDate.format("dddd, Do MMMM YYYY")}</Title>
       </div> */}
-      {loading ? <Spin /> : <ImagesCarousel images={data} width={width} />}
+      {loading ? (
+        <Spin />
+      ) : data.length > 0 ? (
+        <ImagesCarousel images={data} width={width} />
+      ) : (
+        <Title>ไม่พบข้อมูล</Title>
+      )}
     </ItemContainer>
   );
 };
