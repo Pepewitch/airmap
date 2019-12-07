@@ -1,16 +1,13 @@
 const express = require("express");
 const path = require("path");
 const fs = require("fs");
-const app = express();
 const moment = require("moment-timezone");
+const cors = require("cors");
 
+const app = express();
 moment.tz.setDefault("Asia/Bangkok");
 
-const TYPE = {
-  "1H1GALL": "1H1GALL",
-  "24H1GALL": "24H1GALL",
-  PE00GALL: "PE00GALL"
-};
+app.use(cors());
 
 const NOT_SPECIFIC_LEVEL = "ไม่ระบุ Level";
 
