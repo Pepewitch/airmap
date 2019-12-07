@@ -58,7 +58,7 @@ app.get("/image2d", async (req, res) => {
   const today = moment().startOf("day");
   const images = [];
   for (const date of dateList) {
-    const isPass = data <= today;
+    const isPass = date <= today;
     if (option.level === NOT_SPECIFIC_LEVEL) {
       if (isPass) {
         const location = path.join(
