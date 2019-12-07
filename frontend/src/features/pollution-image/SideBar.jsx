@@ -157,7 +157,7 @@ const CloseButton = () => {
   );
 };
 
-const levels = new Array(41).fill(0).map((_, index) => (
+const levels = new Array(42).fill(0).map((_, index) => (
   <Option key={index} value={index}>
     {index}
   </Option>

@@ -9,8 +9,7 @@ import { Image3DItem } from "./Image3DItem";
 const Container = styled.div`
   width: 100%;
   margin: 0 auto;
-  max-width: 600px;
-  padding: 16px;
+  padding: 16px 0;
 `;
 
 export const Image3DList = () => {

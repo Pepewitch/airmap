@@ -24,7 +24,7 @@ const useImages = item => {
       (startDate ? `startDate=${startDate.toISOString()}&` : "") +
       (endDate ? `endDate=${endDate.toISOString()}&` : "") +
       (type ? `type=${type}&` : "") +
-      (level ? `level=${level}&` : "")
+      (level.toString() ? `level=${level}&` : "")
     ).slice(0, -1);
 
     axios
@@ -50,7 +50,7 @@ export const ImageItem = ({ item, width }) => {
       ) : data.length > 0 ? (
         <ImagesCarousel images={data} width={width} />
       ) : (
-        <Title>ไม่พบข้อมูล</Title>
+        <Title level={3}>ไม่พบข้อมูล</Title>
       )}
     </ItemContainer>
   );
