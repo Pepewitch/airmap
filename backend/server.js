@@ -48,7 +48,7 @@ app.get("/image2d", async (req, res) => {
   const endDate = (query.endDate ? moment(query.endDate) : moment()).startOf(
     "day"
   );
-  const { level, type } = level;
+  const { level, type } = query;
   if (endDate.valueOf() < startDate.valueOf()) {
     return res
       .status(400)
