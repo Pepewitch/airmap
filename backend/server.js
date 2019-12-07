@@ -77,6 +77,7 @@ app.get("/image2d", async (req, res) => {
             return res(files);
           });
         });
+        console.log({ files });
         for (const file of files) {
           images.push(
             [
