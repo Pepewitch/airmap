@@ -78,7 +78,6 @@ app.get("/image2d", async (req, res) => {
             return res(files);
           });
         });
-        console.log({ files });
         for (const file of files) {
           images.push(
             [
@@ -189,6 +188,168 @@ app.get("/image2d", async (req, res) => {
                 today.format("YYYYMMDD00"),
                 type,
                 "image2D",
+                file
+              ].join("/")
+            );
+          }
+        }
+        break;
+      }
+    }
+  }
+
+  return res.status(200).send({ images });
+});
+
+app.get("/image3d", async (req, res) => {
+  const { query } = req;
+  const startDate = (query.startDate
+    ? moment(query.startDate)
+    : moment()
+  ).startOf("day");
+  const endDate = (query.endDate ? moment(query.endDate) : moment()).startOf(
+    "day"
+  );
+  const { level, type } = query;
+  if (endDate.valueOf() < startDate.valueOf()) {
+    return res
+      .status(400)
+      .send({ message: "endDate have to be larger than startDate" });
+  }
+
+  const dateList = getDateList(startDate, endDate);
+  const today = moment().startOf("day");
+  const images = [];
+  for (const date of dateList) {
+    const isPass = date <= today;
+    if (level === NOT_SPECIFIC_LEVEL) {
+      if (isPass) {
+        const location = path.join(
+          "C:\\AppServ",
+          "www",
+          "AIR_MODEL",
+          "temp",
+          date.format("YYYYMMDD00"),
+          type,
+          "median",
+          "web3D"
+        );
+        const files = await new Promise(res => {
+          fs.readdir(location, (err, files) => {
+            if (err) return res([]);
+            return res(files.filter(f => f.slice(-5) === ".html"));
+          });
+        });
+        for (const file of files) {
+          images.push(
+            [
+              "AIR_MODEL",
+              "temp",
+              date.format("YYYYMMDD00"),
+              type,
+              "median",
+              "web3D",
+              file
+            ].join("/")
+          );
+        }
+      } else {
+        const location = path.join(
+          "C:\\AppServ",
+          "www",
+          "AIR_MODEL",
+          "temp",
+          today.format("YYYYMMDD00"),
+          type,
+          "median",
+          "web3D"
+        );
+        const files = await new Promise(res => {
+          fs.readdir(location, (err, files) => {
+            if (err) return res([]);
+            return res(files.filter(f => f.slice(-5) === ".html"));
+          });
+        });
+        for (const file of files) {
+          if (
+            file.slice(10, 16) >= startDate.format("YYMMDD") &&
+            file.slice(10, 16) <= endDate.format("YYMMDD")
+          ) {
+            images.push(
+              [
+                "AIR_MODEL",
+                "temp",
+                today.format("YYYYMMDD00"),
+                type,
+                "median",
+                "web3D",
+                file
+              ].join("/")
+            );
+          }
+        }
+        break;
+      }
+    } else {
+      if (isPass) {
+        const location = path.join(
+          "C:\\AppServ",
+          "www",
+          "AIR_MODEL",
+          "temp",
+          date.format("YYYYMMDD00"),
+          type,
+          "web3D"
+        );
+        const files = await new Promise(res => {
+          fs.readdir(location, (err, files) => {
+            if (err) return res([]);
+            return res(files.filter(f => f.slice(-5) === ".html"));
+          });
+        });
+        for (const file of files) {
+          if (file.slice(4, 6) === pad(level, 2)) {
+            images.push(
+              [
+                "AIR_MODEL",
+                "temp",
+                date.format("YYYYMMDD00"),
+                type,
+                "web3D",
+                file
+              ].join("/")
+            );
+          }
+        }
+      } else {
+        const location = path.join(
+          "C:\\AppServ",
+          "www",
+          "AIR_MODEL",
+          "temp",
+          today.format("YYYYMMDD00"),
+          type,
+          "web3D"
+        );
+        const files = await new Promise(res => {
+          fs.readdir(location, (err, files) => {
+            if (err) return res([]);
+            return res(files.filter(f => f.slice(-5) === ".html"));
+          });
+        });
+        for (const file of files) {
+          if (
+            file.slice(6, 12) >= startDate.format("YYMMDD") &&
+            file.slice(6, 12) <= endDate.format("YYMMDD") &&
+            file.slice(4, 6) === pad(level, 2)
+          ) {
+            images.push(
+              [
+                "AIR_MODEL",
+                "temp",
+                today.format("YYYYMMDD00"),
+                type,
+                "web3D",
                 file
               ].join("/")
             );
