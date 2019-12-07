@@ -64,6 +64,7 @@ app.get("/image2d", async (req, res) => {
       if (isPass) {
         const location = path.join(
           "C:\\AppServ",
+          "www",
           "AIR_MODEL",
           "temp",
           date.format("YYYYMMDD00"),
@@ -94,6 +95,7 @@ app.get("/image2d", async (req, res) => {
       } else {
         const location = path.join(
           "C:\\AppServ",
+          "www",
           "AIR_MODEL",
           "temp",
           today.format("YYYYMMDD00"),
@@ -131,6 +133,7 @@ app.get("/image2d", async (req, res) => {
       if (isPass) {
         const location = path.join(
           "C:\\AppServ",
+          "www",
           "AIR_MODEL",
           "temp",
           date.format("YYYYMMDD00"),
@@ -160,6 +163,7 @@ app.get("/image2d", async (req, res) => {
       } else {
         const location = path.join(
           "C:\\AppServ",
+          "www",
           "AIR_MODEL",
           "temp",
           today.format("YYYYMMDD00"),
