@@ -11,6 +11,7 @@ import {
 } from "./redux";
 import { Button, Divider, DatePicker, Select, Typography, Slider } from "antd";
 import ptt from "assets/pttlogo.png";
+import { TYPE, NOT_SPECIFIC_LEVEL } from "./const";
 
 const { Text } = Typography;
 const { Option } = Select;
@@ -177,6 +178,9 @@ const Controller = ({ item, index }) => {
   const onLevelChange = level => {
     onChange({ ...item, level }, index);
   };
+  const onTypeChange = type => {
+    onChange({ ...item, type }, index);
+  };
   return (
     <ControllerContainer>
       {/* <RemoveButton className="remove-button" onClick={onRemoveButtonClick} /> */}
@@ -200,6 +204,17 @@ const Controller = ({ item, index }) => {
           format="DD MMMM YYYY"
         />
       </DatePickerContainer>
+      <Text strong>Select Type</Text>
+      <Select
+        style={{ width: "100%", marginBottom: 8 }}
+        placeholder="Level"
+        value={item.type}
+        onChange={onTypeChange}
+      >
+        <Option value={TYPE["1H1GALL"]}>1H1GALL</Option>
+        <Option value={TYPE["24H1GALL"]}>24H1GALL</Option>
+        <Option value={TYPE["PE00GALL"]}>PE00GALL</Option>
+      </Select>
       <Text strong>Select Level</Text>
       <Select
         style={{ width: "100%" }}
@@ -207,6 +222,7 @@ const Controller = ({ item, index }) => {
         value={item.level}
         onChange={onLevelChange}
       >
+        <Option value={NOT_SPECIFIC_LEVEL}>{NOT_SPECIFIC_LEVEL}</Option>
         {levels}
       </Select>
     </ControllerContainer>

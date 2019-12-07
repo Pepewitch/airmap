@@ -1,4 +1,5 @@
 import moment from "moment";
+import { TYPE, NOT_SPECIFIC_LEVEL } from "./const";
 
 const initialState = {
   sidebar: false,
@@ -11,8 +12,9 @@ const initialState = {
   items: [
     {
       startDate: moment(),
-      endDate: null,
-      level: 0
+      endDate: moment(),
+      type: TYPE["1H1GALL"],
+      level: NOT_SPECIFIC_LEVEL
     }
   ]
 };

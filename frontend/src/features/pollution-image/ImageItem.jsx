@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Typography, Button } from "antd";
 import styled from "styled-components";
 import { ImagesCarousel } from "./ImagesCarousel";
+import moment from "moment";
 
 const { Title } = Typography;
 
@@ -9,25 +10,20 @@ const ItemContainer = styled.div`
   width: 100%;
 `;
 
+const useImages = item => {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {}, [item]);
+  return [data, loading];
+};
+
 export const ImageItem = ({ item, width }) => {
-  if (!item.startDate || (!item.level && typeof item.level !== "number")) {
-    return <span>Configuration is invalid.</span>;
-  }
   return (
     <ItemContainer>
-      <div style={{ display: "flex" }}>
+      {/* <div style={{ display: "flex" }}>
         <Title level={3}>{item.startDate.format("dddd, Do MMMM YYYY")}</Title>
-      </div>
-      <ImagesCarousel
-        images={[
-          `/airdata/${
-            item.level < 100
-              ? `0${Math.floor(item.level / 10)}`
-              : Math.floor(item.level / 10)
-          }_01H1GALL.png`
-        ]}
-        width={width}
-      />
+      </div> */}
+      <ImagesCarousel images={images} width={width} />
     </ItemContainer>
   );
 };
