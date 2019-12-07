@@ -58,10 +58,16 @@ app.get("/show", (req, res) => {
   }
 });
 
+app.get("/ping", (req, res) => {
+  return res.status(200).send({ message: "pong" });
+});
+
 app.get("*", (req, res) => {
   return res
     .status(200)
     .sendFile(path.join(__dirname, "..", "frontend", "build", "index.html"));
 });
 
-app.listen(3000);
+app.listen(3000, () => {
+  console.log(`Listen at PORT 3000`);
+});
