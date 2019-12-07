@@ -6,10 +6,13 @@ import { ImageItem } from "./ImageItem";
 import { Divider } from "antd";
 
 const Container = styled.div`
-  width: 100%;
+  width: 800px;
   margin: 0 auto;
-  max-width: 600px;
+  max-width: 100vw;
   padding: 16px;
+  @media screen and (min-width: 801px) {
+    max-width: 100%;
+  }
 `;
 
 export const ImageList = () => {

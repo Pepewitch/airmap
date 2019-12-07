@@ -15,6 +15,7 @@ const Container = styled.div`
   align-items: center;
   padding: 0 16px;
   z-index: 1000;
+  background: white;
 `;
 
 const Spacer = styled.div`
