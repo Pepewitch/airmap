@@ -43,11 +43,10 @@ const ShowingItem = ({ files }) => {
   useEffect(() => {
     setSrc(files[0]);
   }, [files]);
-
+  const index = files.findIndex(f => f === src);
   const onLeftClick = () =>
-    setSrc(files[(files.findIndex(f => f === src) - 1) % files.length]);
-  const onRightClick = () =>
-    setSrc(files[(files.findIndex(f => f === src) + 1) % files.length]);
+    setSrc(files[index === 0 ? files.length - 1 : (index - 1) % files.length]);
+  const onRightClick = () => setSrc(files[(index + 1) % files.length]);
 
   return (
     <div style={{ position: "relative" }}>
