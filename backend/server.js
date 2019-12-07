@@ -80,7 +80,17 @@ app.get("/image2d", async (req, res) => {
           });
         });
         for (const file of files) {
-          images.push(file);
+          images.push(
+            [
+              "AIR_MODEL",
+              "temp",
+              date.format("YYYYMMDD00"),
+              type,
+              "median",
+              "image2D",
+              file
+            ].join("/")
+          );
         }
       } else {
         const location = path.join(
@@ -103,7 +113,17 @@ app.get("/image2d", async (req, res) => {
             file.slice(10, 16) >= startDate.format("YYMMDD") &&
             file.slice(10, 16) <= endDate.format("YYMMDD")
           ) {
-            images.push(file);
+            images.push(
+              [
+                "AIR_MODEL",
+                "temp",
+                today.format("YYYYMMDD00"),
+                type,
+                "median",
+                "image2D",
+                file
+              ].join("/")
+            );
           }
         }
         break;
@@ -125,7 +145,18 @@ app.get("/image2d", async (req, res) => {
           });
         });
         for (const file of files) {
-          if (file.slice(4, 6) === pad(level, 2)) images.push(file);
+          if (file.slice(4, 6) === pad(level, 2)) {
+            images.push(
+              [
+                "AIR_MODEL",
+                "temp",
+                date.format("YYYYMMDD00"),
+                type,
+                "image2D",
+                file
+              ].join("/")
+            );
+          }
         }
       } else {
         const location = path.join(
@@ -148,7 +179,16 @@ app.get("/image2d", async (req, res) => {
             file.slice(6, 12) <= endDate.format("YYMMDD") &&
             file.slice(4, 6) === pad(level, 2)
           ) {
-            images.push(file);
+            images.push(
+              [
+                "AIR_MODEL",
+                "temp",
+                today.format("YYYYMMDD00"),
+                type,
+                "image2D",
+                file
+              ].join("/")
+            );
           }
         }
         break;
