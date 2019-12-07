@@ -48,12 +48,13 @@ app.get("/image2d", async (req, res) => {
   const endDate = (query.endDate ? moment(query.endDate) : moment()).startOf(
     "day"
   );
-  const level = query.level;
+  const { level, type } = level;
   if (endDate.valueOf() < startDate.valueOf()) {
     return res
       .status(400)
       .send({ message: "endDate have to be larger than startDate" });
   }
+
   const dateList = getDateList(startDate, endDate);
   const today = moment().startOf("day");
   const images = [];
