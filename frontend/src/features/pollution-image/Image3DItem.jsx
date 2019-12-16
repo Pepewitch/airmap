@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Divider, Spin, Button, Typography } from "antd";
 import axios from "axios";
 import { IMAGE_ENDPOINT, API_ENDPOINT } from "./const";
+import moment, { months } from "moment";
 
 const { Title } = Typography;
 
@@ -31,7 +32,7 @@ const Direction = ({ direction, ...props }) => {
 const Indicator = styled.div`
   width: ${props => (props.active ? "16px" : "12px")};
   height: ${props => (props.active ? "16px" : "12px")};
-  margin: 8px;
+  margin: 4px;
   border-radius: 50%;
   background: ${props =>
     props.active ? "rgba(24, 144, 255, 1)" : "rgba(24, 144, 255, 0.6)"};
@@ -47,26 +48,55 @@ const ShowingItem = ({ files }) => {
   const onLeftClick = () =>
     setSrc(files[index === 0 ? files.length - 1 : (index - 1) % files.length]);
   const onRightClick = () => setSrc(files[(index + 1) % files.length]);
-
+  const isMed = src.indexOf("median") > -1;
+  const matchFilename = src.match(/[0-9]{6}.html/);
+  const filename = matchFilename && matchFilename[0];
+  const date =
+    filename &&
+    moment().set({
+      year: Number(`20${filename.slice(0, 2)}`),
+      month: Number(filename.slice(2, 4)) - 1,
+      date: Number(filename.slice(4, 6))
+    });
   return (
-    <div style={{ position: "relative" }}>
-      <StyledIframe src={src} />
-      <Direction direction="left" onClick={onLeftClick} />
-      <Direction direction="right" onClick={onRightClick} />
-      <div
-        style={{
-          position: "absolute",
-          bottom: 4,
-          display: "flex",
-          flexFlow: "row nowrap",
-          justifyContent: "center",
-          alignItems: "center",
-          width: "100%"
-        }}
-      >
-        {files.map(f => (
-          <Indicator key={f} active={f === src} onClick={() => setSrc(f)} />
-        ))}
+    <div>
+      {date && (
+        <Title level={4} style={{ marginLeft: 16 }}>
+          Date: {date.format("DD-MM-YYYY")} Level:{" "}
+          {isMed
+            ? "Median"
+            : src.match(/[0-9]{8}.html/) &&
+              src.match(/[0-9]{8}.html/)[0] &&
+              src.match(/[0-9]{8}.html/)[0].slice(0, 2)}
+        </Title>
+      )}
+      <div style={{ position: "relative" }}>
+        <Spin
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)"
+          }}
+        />
+        <StyledIframe src={src} />
+        <Direction direction="left" onClick={onLeftClick} />
+        <Direction direction="right" onClick={onRightClick} />
+        <div
+          style={{
+            position: "absolute",
+            bottom: 4,
+            display: "flex",
+            flexFlow: "row nowrap",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "100%"
+          }}
+        >
+          {files.map(f => (
+            <Indicator key={f} active={f === src} onClick={() => setSrc(f)} />
+          ))}
+        </div>
       </div>
     </div>
   );
