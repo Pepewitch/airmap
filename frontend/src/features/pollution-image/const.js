@@ -6,6 +6,6 @@ export const TYPE = {
 
 export const NOT_SPECIFIC_LEVEL = "ไม่ระบุ Level";
 
-export const API_ENDPOINT = "http://34.87.95.181:3000";
+export const API_ENDPOINT = "http://localhost:3000";
 
-export const IMAGE_ENDPOINT = "http://34.87.95.181";
+export const IMAGE_ENDPOINT = "http://localhost";
