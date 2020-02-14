@@ -14,7 +14,7 @@ const NOT_SPECIFIC_LEVEL = "ไม่ระบุ Level";
 app.use(express.static(path.join(__dirname, "..", "frontend", "build")));
 
 app.get("/www/*", (req, res) => {
-  const location = path.join("C:\\AppServ", ...req.path.split("/").slice(1));
+  const location = path.join("D:\\AppServ", ...req.path.split("/").slice(1));
   fs.readdir(location, (err, files) => {
     if (err) {
       res.status(404).send(err);
@@ -63,7 +63,7 @@ app.get("/image2d", async (req, res) => {
     if (level === NOT_SPECIFIC_LEVEL) {
       if (isPass) {
         const location = path.join(
-          "C:\\AppServ",
+          "D:\\AppServ",
           "www",
           "AIR_MODEL",
           "temp",
@@ -93,7 +93,7 @@ app.get("/image2d", async (req, res) => {
         }
       } else {
         const location = path.join(
-          "C:\\AppServ",
+          "D:\\AppServ",
           "www",
           "AIR_MODEL",
           "temp",
@@ -131,7 +131,7 @@ app.get("/image2d", async (req, res) => {
     } else {
       if (isPass) {
         const location = path.join(
-          "C:\\AppServ",
+          "D:\\AppServ",
           "www",
           "AIR_MODEL",
           "temp",
@@ -161,7 +161,7 @@ app.get("/image2d", async (req, res) => {
         }
       } else {
         const location = path.join(
-          "C:\\AppServ",
+          "D:\\AppServ",
           "www",
           "AIR_MODEL",
           "temp",
@@ -225,7 +225,7 @@ app.get("/image3d", async (req, res) => {
     if (level === NOT_SPECIFIC_LEVEL) {
       if (isPass) {
         const location = path.join(
-          "C:\\AppServ",
+          "D:\\AppServ",
           "www",
           "AIR_MODEL",
           "temp",
@@ -255,7 +255,7 @@ app.get("/image3d", async (req, res) => {
         }
       } else {
         const location = path.join(
-          "C:\\AppServ",
+          "D:\\AppServ",
           "www",
           "AIR_MODEL",
           "temp",
@@ -293,7 +293,7 @@ app.get("/image3d", async (req, res) => {
     } else {
       if (isPass) {
         const location = path.join(
-          "C:\\AppServ",
+          "D:\\AppServ",
           "www",
           "AIR_MODEL",
           "temp",
@@ -323,7 +323,7 @@ app.get("/image3d", async (req, res) => {
         }
       } else {
         const location = path.join(
-          "C:\\AppServ",
+          "D:\\AppServ",
           "www",
           "AIR_MODEL",
           "temp",
